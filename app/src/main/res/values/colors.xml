@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00b736</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#00e152</color>
+    <color name="beauty_green">#a7ff8a</color>
+    <color name="beauty_green_hint">#a4a7ff8a</color>
+    <color name="backgtoundd">#036010</color>
+</resources>
