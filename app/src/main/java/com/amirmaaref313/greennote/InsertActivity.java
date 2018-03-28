@@ -54,19 +54,26 @@ public class InsertActivity extends AppCompatActivity {
         setTitle("Saving Note...Please Wait...");
         Calendar c = Calendar.getInstance();
 
-        String sDate = String.valueOf(c.get(Calendar.YEAR))
+        final String sDate = String.valueOf(c.get(Calendar.YEAR))
                 + String.valueOf(c.get(Calendar.MONTH))
                 + String.valueOf(c.get(Calendar.DAY_OF_MONTH))
                 + String.valueOf(c.get(Calendar.HOUR_OF_DAY))
                 + String.valueOf(c.get(Calendar.MINUTE))
                 + String.valueOf(c.get(Calendar.SECOND));
+        final Context context = this;
 
-        if (itHasImage) {
-            String SavedImage = saveToInternalStorage(((BitmapDrawable) imageView.getDrawable()).getBitmap(), sDate);
-            SimpleActions.Insert(this, String.valueOf(t1.getText()), String.valueOf(t2.getText()), SavedImage);
-        }
-        else
-            SimpleActions.Insert(this, String.valueOf(t1.getText()), String.valueOf(t2.getText()));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (itHasImage) {
+                    String SavedImage = saveToInternalStorage(((BitmapDrawable) imageView.getDrawable()).getBitmap(), sDate);
+                    SimpleActions.Insert(context, String.valueOf(t1.getText()), String.valueOf(t2.getText()), SavedImage);
+                }
+                else
+                    SimpleActions.Insert(context, String.valueOf(t1.getText()), String.valueOf(t2.getText()));
+
+            }
+        }).start();
 
         setTitle("New Note...");
         super.onBackPressed();

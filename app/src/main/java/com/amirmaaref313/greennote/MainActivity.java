@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,10 +35,10 @@ public class MainActivity extends AppCompatActivity
     TextView textView;
     String[] items;
     ListView listView;
-    Bitmap [] bitmaps;
-    AppDatabase  appDatabase;
+    Bitmap[] bitmaps;
+    AppDatabase appDatabase;
     List<Note> getList;
-    int [] ids;
+    int[] ids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +46,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        listView = (ListView)findViewById(R.id.listView);
-      //  imageView=(ImageView)findViewById(R.id.imageView2);
-        textView=(TextView)findViewById(R.id.textView);
+        listView = (ListView) findViewById(R.id.listView);
+        //  imageView=(ImageView)findViewById(R.id.imageView2);
+        textView = (TextView) findViewById(R.id.textView);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +73,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 setMovaghat(position);
-
             }
         });
     }
@@ -102,7 +102,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.app_bar_search) {
+            startActivity(new Intent(this , HelpActivity.class));
             return true;
         }
 
@@ -115,50 +116,29 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
+        if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public void dadada(){
+    public void dadada() {
         setTitle("Loading Notes...PLease Wait...");
 //        appDatabase = Room.databaseBuilder(load,AppDatabase.class,"noteData")
 //                .build();
 
 
-
-        appDatabase = Room.databaseBuilder(this.getApplication(),AppDatabase.class,"noteData")
+        appDatabase = Room.databaseBuilder(this.getApplication(), AppDatabase.class, "noteData")
                 .allowMainThreadQueries().build();
-
-
-//        class flii extends AsyncTask<Void,Void,Void>{
-//
-//            @Override
-//            protected Void doInBackground(Void... voids) {
-//                appDatabase = Room.databaseBuilder(this,AppDatabase.class,"noteData")
-//                .build();
-//                return null;
-//            }
-//        }
-
 
         List<Note> notes = new ArrayList<>();
 
-        notes.add(new Note("Amirhosein","Gh"));
+        notes.add(new Note("Amirhosein", "Gh"));
 
         Note note = new Note("Amirhosein", "Sarah");
 
@@ -168,38 +148,44 @@ public class MainActivity extends AppCompatActivity
 
         items = new String[getList.size()];
 
-        for(int i=0;i<=getList.size()-1;i++){
-            items[i]=getList.get(i).getTitle();
+        for (int i = 0; i <= getList.size() - 1; i++) {
+            items[i] = getList.get(i).getTitle();
         }
         bitmaps = new Bitmap[getList.size()];
-        for (int i=0;i<=getList.size()-1;i++){
-            bitmaps[i]=ImageHandler.getImageBitmap(this,getList.get(i).getImg());
+        for (int i = 0; i <= getList.size() - 1; i++) {
+            bitmaps[i] = ImageHandler.getImageBitmap(this, getList.get(i).getImg(), appDatabase);
         }
 
         ids = new int[getList.size()];
-        for(int i = 0; i<=getList.size()-1;i++){
-            ids[i]=getList.get(i).getNid();
+        for (int i = 0; i <= getList.size() - 1; i++) {
+            ids[i] = getList.get(i).getNid();
         }
 
-        CustomListLoader adapter = new CustomListLoader(this , items ,bitmaps);
+        CustomListLoader adapter = new CustomListLoader(this, items, bitmaps);
         listView.setAdapter(adapter);
-
 
         setTitle("Green Note");
     }
-    private void startInsertActivity(){
-        startActivity(new Intent(this,InsertActivity.class));
+
+    private void startInsertActivity() {
+        startActivity(new Intent(this, InsertActivity.class));
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         dadada();
     }
 
-    public void setMovaghat(int pos){
+    @Override
+    public void onStart() {
+        super.onStart();
+        dadada();
+    }
+
+    public void setMovaghat(int pos) {
         Movaghat.setNote(getList.get(pos));
         Movaghat.setBitmap(bitmaps[pos]);
-        startActivity(new Intent(this,ViewActivity.class));
+        startActivity(new Intent(this, ViewActivity.class));
     }
 }

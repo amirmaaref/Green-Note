@@ -11,6 +11,15 @@ import DataConnection.Note;
 public class Movaghat {
     private static Bitmap bitmap;
     private static Note note;
+    private static String imgIdForDelete;
+
+    public static String getImgIdForDelete() {
+        return imgIdForDelete;
+    }
+
+    public static void setImgIdForDelete(String imgIdForDelete) {
+        Movaghat.imgIdForDelete = imgIdForDelete;
+    }
 
     public static void setNote(Note note) {
         Movaghat.note = note;

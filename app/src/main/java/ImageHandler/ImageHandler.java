@@ -20,10 +20,17 @@ import DataConnection.Note;
 
 public class ImageHandler {
    private static Bitmap b;
-    public static Bitmap getImageBitmap(Context context , String Filename){
-        AppDatabase appDatabase = Room.databaseBuilder(context,AppDatabase.class,"noteData")
-                .allowMainThreadQueries().build();
-        List<Note> getList = appDatabase.noteDao().getAll();
+
+    public static Bitmap getImageBitmap(Context context , String Filename,final AppDatabase appDatabase){
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<Note> getList = appDatabase.noteDao().getAll();
+            }
+        }).start();
+
         try{
 
             ContextWrapper cw = new ContextWrapper(context);
@@ -36,7 +43,7 @@ public class ImageHandler {
             return b;
         }
         catch (Exception e){
-            Toast.makeText(context, "File Not Found", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(context, "File Not Found", Toast.LENGTH_SHORT).show();
             return null;
         }
     }

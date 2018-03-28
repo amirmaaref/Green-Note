@@ -65,7 +65,7 @@ public class EditActivity extends AppCompatActivity {
             setTitle("Editing...Please Wait...");
             SimpleActions.Update(this,nn);
             setTitle("Edit Note...");
-
+            deleteImgBytId(Movaghat.getImgIdForDelete());
             super.onBackPressed();
         }
         else
@@ -78,7 +78,6 @@ public class EditActivity extends AppCompatActivity {
             setTitle("Editing...Please Wait...");
             SimpleActions.Update(this,nn);
             setTitle("Edit Note...");
-
             super.onBackPressed();
         }
     }
@@ -131,6 +130,30 @@ public class EditActivity extends AppCompatActivity {
 
         } else {
             Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void deleteImgBytId(String imgId){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath = new File(directory, imgId + ".jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            mypath.delete();
+            // bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
