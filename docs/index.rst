@@ -7,3 +7,26 @@
 
 .. figure:: photos/fencer_tomcat.jpg
   :align: center
+  
+  
+  آن ها فقط کد میزنند!!!!
+-------
+
+یکی از آن ها دوست دار هست و خیلی کد مینویسد
+یکی از شکل های ارائه شده این شکلی هست
+
+.. figure:: photos/slytherin.jpg
+  :align: center
+  
+  
+  یک نمونه کد را به این صورت می بینید
+  .. code-block:: python
+    import time
+    tt = time.time()
+    print(time.now())
+    
+ 
+همچمین یک متن به صورت ```اینجوری که این رنگیه``` نوشته میشه خوخوخوخوخو
+
+
+  
